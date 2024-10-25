@@ -8,7 +8,7 @@ namespace Hackathon {
             this.teamBuildingStrategy = teamBuildingStrategy;
         }
 
-        public List<Team> FormOptimalTeams(List<Employee> juniors, List<Employee> teamLeads, List<Wishlist> juniorWishlists, List<Wishlist> teamLeadWishlists) {
+        public List<Team> BuildOptimalTeams(List<Employee> juniors, List<Employee> teamLeads, List<Wishlist> juniorWishlists, List<Wishlist> teamLeadWishlists) {
             return teamBuildingStrategy.BuildTeams(juniors, teamLeads, juniorWishlists, teamLeadWishlists);
         }
         
