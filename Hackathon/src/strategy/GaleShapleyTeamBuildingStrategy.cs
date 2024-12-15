@@ -6,6 +6,10 @@ namespace Hackathon {
     public class GaleShapleyTeamBuildingStrategy : ITeamBuildingStrategy {
         public List<Team> BuildTeams(List<Employee> teamLeads, List<Employee> juniors, 
             List<Wishlist> teamLeadsWishlists, List<Wishlist> juniorsWishlists) {
+            if (teamLeads.Count != juniors.Count) {
+                throw new ArgumentException("teamsLeads count must be equal to juniors count");
+            }
+            
             var teamLeadToJunior = new Dictionary<int, int>();
             var juniorDict = juniors.ToDictionary(j => j.Id);
             var teamLeadDict = teamLeads.ToDictionary(t => t.Id);

@@ -9,6 +9,9 @@ namespace Hackathon {
         public WishlistGenerator(int seed) {
             rnd = new Random(seed);
         }
+        public WishlistGenerator() {
+            rnd = new Random();
+        }
         
         public List<Wishlist> GenerateWishlists(List<Employee> employees, List<Employee> desiredEmployees) {
             List<Wishlist> wishlists = new List<Wishlist>();
