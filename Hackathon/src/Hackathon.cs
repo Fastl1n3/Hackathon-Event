@@ -21,7 +21,7 @@ public class Hackathon {
             
         var dreamTeams = _hrManager.BuildOptimalTeams(teamLeads, juniors, teamLeadWishlists, juniorWishlists);
         double harmonicMean = _hrDirector.CalculateHarmonicMean(dreamTeams, juniorWishlists, teamLeadWishlists);
-      //  WriteHackathon(dreamTeams, harmonicMean, juniorWishlists, teamLeadWishlists);
+        WriteHackathon(dreamTeams, harmonicMean, juniorWishlists, teamLeadWishlists);
         return harmonicMean;
     }
 

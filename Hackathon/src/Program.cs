@@ -19,7 +19,7 @@ public class Program {
             })
             .ConfigureServices((hostContext, services) => {
                 services.AddSingleton(_ => new ProgramContext(numHackathons));
-                services.AddTransient<ITeamBuildingStrategy, OptimalStrategy>();
+                services.AddTransient<ITeamBuildingStrategy, DummyTeamBuildingStrategy>();
                 services.AddTransient<AbstractHRManager, HRManager>();
                 services.AddTransient<HRDirector>();
                 services.AddTransient<Hackathon>();
