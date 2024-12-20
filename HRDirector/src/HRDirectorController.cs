@@ -25,4 +25,4 @@ public class HRDirectorController : ControllerBase {
     }
 }
 
-public record TeamsRequest(List<Team> Teams, List<Wishlist> JuniorWishlists, List<Wishlist> TeamLeadWishlists);
+public record TeamsRequest(List<Team> Teams);

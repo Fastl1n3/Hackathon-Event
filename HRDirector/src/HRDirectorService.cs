@@ -1,16 +1,51 @@
-﻿namespace HRDirector;
+﻿using Contracts;
+using HRDirector.rabbitmq;
 
-public class HRDirectorService {
+namespace HRDirector;
+
+public class HRDirectorService {//: BackgroundService {
     private readonly DirectorDbContext _dbContext;
-
-    public HRDirectorService(DirectorDbContext dbContext) {
+    private readonly DirectorRabbitMqConsumer _directorRabbitMqConsumer;
+    public HRDirectorService(DirectorDbContext dbContext, DirectorRabbitMqConsumer directorRabbitMqConsumer) {
         _dbContext = dbContext;
+        _directorRabbitMqConsumer = directorRabbitMqConsumer;
     }
 
+    public void HandleTeams(TeamsRequest request) {
+        var teamLeadWishlists = new List<Wishlist>();
+        var juniorWishlists = new List<Wishlist>();
+        var messageAccumulator = _directorRabbitMqConsumer.GetMessageAccumulator();
+        while (messageAccumulator.GetMessages().Count != request.Teams.Count * 2) { }
+        var allWishlists = new List<WishlistRequest>(messageAccumulator.GetMessages());
+        messageAccumulator.ClearMessages();
+        
+        WishlistsRequestsToWishlists(allWishlists, juniorWishlists, teamLeadWishlists);
+        Console.WriteLine("LEN: " + teamLeadWishlists.Count + ", " + juniorWishlists.Count);
+        var harmonicMean = CalculateHarmonicMean(request.Teams, juniorWishlists, teamLeadWishlists);
+        Console.WriteLine("Harmonic Mean: " + harmonicMean);
+        teamLeadWishlists.Clear();
+        juniorWishlists.Clear();
+        WriteHackathon(request.Teams, harmonicMean, juniorWishlists, teamLeadWishlists);
+    }
+    
+    private void WishlistsRequestsToWishlists(List<WishlistRequest> wishlists, List<Wishlist> juniorWishlists, List<Wishlist> teamLeadWishlists) {
+        foreach (var wishlist in wishlists) {
+            switch (wishlist.Role.ToLower()) {
+                case "teamlead":
+                    teamLeadWishlists.Add(new Wishlist(wishlist.EmployeeId, wishlist.DesiredEmployees));
+                    break;
+                case "junior":
+                    juniorWishlists.Add(new Wishlist(wishlist.EmployeeId, wishlist.DesiredEmployees));
+                    break;
+                default:
+                    throw new ArgumentException("Invalid role. Must be either 'TeamLead' or 'Junior'");
+            }
+        }
+    }
+    
     private double CalculateHarmonicMean(List<Team> teams, List<Wishlist> juniorWishlists, List<Wishlist> teamLeadWishlists) {
         double znam = 0.0;
         foreach (var team in teams) {
-        //    Console.WriteLine("teamLead: " + team.TeamLead.Id + ", junior: " + team.Junior.Id);
             var teamLeadWishlist = teamLeadWishlists.First(w => w.EmployeeId == team.TeamLead.Id);
             var juniorWishlist = juniorWishlists.First(w => w.EmployeeId == team.Junior.Id);
             znam += 1.0 / (GetSatisfaction(teams.Count, teamLeadWishlist, team.Junior.Id) + GetSatisfaction(teams.Count, juniorWishlist, team.TeamLead.Id));
@@ -23,12 +58,6 @@ public class HRDirectorService {
         return num - index;
     }
 
-    public void HandleTeams(TeamsRequest request) {
-        var harmonicMean = CalculateHarmonicMean(request.Teams, request.JuniorWishlists, request.TeamLeadWishlists);
-        Console.WriteLine("Harmonic Mean: " + harmonicMean);
-        WriteHackathon(request.Teams, harmonicMean, request.JuniorWishlists, request.TeamLeadWishlists);
-    }
-    
     private void WriteHackathon(List<Team> teams, double harmonicMean, List<Wishlist> juniorWishlists, List<Wishlist> teamLeadWishlists) {
         var hackathonEntity = new HackathonEntity { HarmonicMean = harmonicMean };
         using var transaction = _dbContext.Database.BeginTransaction();

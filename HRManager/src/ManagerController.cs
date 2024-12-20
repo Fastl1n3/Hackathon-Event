@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Net.Http.Json;
+using Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRManager;
@@ -64,5 +65,3 @@ public class ManagerController : ControllerBase {
             : "Distribution successfully sent to HR Director.");
     }
 }
-
-public record WishlistRequest(int EmployeeId, string EmployeeName, string Role, int[] DesiredEmployees);

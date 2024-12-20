@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackathon", "Hackathon\Hackathon.csproj", "{F2666A4C-C5BA-46C1-A955-8DC2E9C84853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackathonTest", "HackathonTest\HackathonTest.csproj", "{DDE58EAE-4B57-4260-8F87-FA32BFAF717C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRManager", "HRManager\HRManager.csproj", "{9E5BEE5F-ACCD-4A0E-ACE1-222C83AF977A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRDirector", "HRDirector\HRDirector.csproj", "{83A10BFA-9A64-4D4E-A4BC-38F85D503FF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee", "Employee\Employee.csproj", "{84DAFCC1-4877-4C20-990A-1C64AC595C3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1E3DF0A8-EDAF-42BF-8504-87577D4C40C5}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{9C6346A8-792C-4603-AAA8-C3D03AA74E6D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2666A4C-C5BA-46C1-A955-8DC2E9C84853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2666A4C-C5BA-46C1-A955-8DC2E9C84853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2666A4C-C5BA-46C1-A955-8DC2E9C84853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2666A4C-C5BA-46C1-A955-8DC2E9C84853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDE58EAE-4B57-4260-8F87-FA32BFAF717C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDE58EAE-4B57-4260-8F87-FA32BFAF717C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDE58EAE-4B57-4260-8F87-FA32BFAF717C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE58EAE-4B57-4260-8F87-FA32BFAF717C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E5BEE5F-ACCD-4A0E-ACE1-222C83AF977A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E5BEE5F-ACCD-4A0E-ACE1-222C83AF977A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E5BEE5F-ACCD-4A0E-ACE1-222C83AF977A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E5BEE5F-ACCD-4A0E-ACE1-222C83AF977A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83A10BFA-9A64-4D4E-A4BC-38F85D503FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83A10BFA-9A64-4D4E-A4BC-38F85D503FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83A10BFA-9A64-4D4E-A4BC-38F85D503FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83A10BFA-9A64-4D4E-A4BC-38F85D503FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84DAFCC1-4877-4C20-990A-1C64AC595C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84DAFCC1-4877-4C20-990A-1C64AC595C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84DAFCC1-4877-4C20-990A-1C64AC595C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84DAFCC1-4877-4C20-990A-1C64AC595C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C6346A8-792C-4603-AAA8-C3D03AA74E6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C6346A8-792C-4603-AAA8-C3D03AA74E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C6346A8-792C-4603-AAA8-C3D03AA74E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C6346A8-792C-4603-AAA8-C3D03AA74E6D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

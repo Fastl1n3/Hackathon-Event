@@ -10,6 +10,8 @@
 
     <ItemGroup>
         <PackageReference Include="EFCore.NamingConventions" Version="6.0.0" />
+        <PackageReference Include="MassTransit" Version="8.2.5" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.36">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,6 +24,7 @@
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.29" />
+        <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -38,6 +41,10 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Contracts\Contracts.csproj" />
     </ItemGroup>
     
 </Project>

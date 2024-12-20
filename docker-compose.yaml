@@ -1,4 +1,19 @@
 ﻿services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # Порт для RabbitMQ
+      - "15672:15672" # Порт для RabbitMQ Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
   teamlead-1:
     image: employee
     build:
@@ -7,9 +22,10 @@
     environment:
       APP_TYPE: teamlead
       APP_ID: 1
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   teamlead-2:
     image: employee
     build:
@@ -18,9 +34,10 @@
     environment:
       APP_TYPE: teamlead
       APP_ID: 2
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   teamlead-3:
     image: employee
     build:
@@ -29,9 +46,10 @@
     environment:
       APP_TYPE: teamlead
       APP_ID: 3
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   teamlead-4:
     image: employee
     build:
@@ -40,9 +58,10 @@
     environment:
       APP_TYPE: teamlead
       APP_ID: 4
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   teamlead-5:
     image: employee
     build:
@@ -51,9 +70,10 @@
     environment:
       APP_TYPE: teamlead
       APP_ID: 5
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   junior-1:
     image: employee
     build:
@@ -62,9 +82,10 @@
     environment:
       APP_TYPE: junior
       APP_ID: 6
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   junior-2:
     image: employee
     build:
@@ -73,9 +94,10 @@
     environment:
       APP_TYPE: junior
       APP_ID: 7
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   junior-3:
     image: employee
     build:
@@ -84,9 +106,10 @@
     environment:
       APP_TYPE: junior
       APP_ID: 8
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   junior-4:
     image: employee
     build:
@@ -95,9 +118,10 @@
     environment:
       APP_TYPE: junior
       APP_ID: 9
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
   junior-5:
     image: employee
     build:
@@ -106,20 +130,29 @@
     environment:
       APP_TYPE: junior
       APP_ID: 10
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrmanager
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy
 
   hrdirector:
     image: hrdirector
     build:
       context: .
       dockerfile: HRDirector/Dockerfile
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
   hrmanager:
     image: hrmanager
     build:
       context: .
       dockerfile: HRManager/Dockerfile
+    environment:
+      RABBITMQ_HOST: rabbitmq
     depends_on:
-      - hrdirector
+      rabbitmq:
+        condition: service_healthy

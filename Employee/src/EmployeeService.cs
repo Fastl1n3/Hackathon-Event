@@ -1,28 +1,22 @@
-﻿using System.Net.Http.Json;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+﻿using Contracts;
+using Employee.rabbitmq;
 
 namespace Employee;
 
-public class EmployeeService : BackgroundService {
-    private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
+public class EmployeeService {
+    private readonly EmployeeRabbitMqService _mqService;
     
-    private readonly WishlistGenerator _wishlistGenerator = new WishlistGenerator(); 
+    private readonly WishlistGenerator _wishlistGenerator = new(); 
 
-    public EmployeeService(HttpClient httpClient, IConfiguration configuration) {
-        _httpClient = httpClient;
-        _configuration = configuration;
+    public EmployeeService(EmployeeRabbitMqService mqService) {
+        _mqService = mqService;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
+    public void GoToHackathon() {
         var wishlistRequest = CreateWishlistRequest();
         Console.WriteLine("Wishlist created.");
-        var response = await _httpClient.PostAsJsonAsync("http://hrmanager:8086/hrmanager/api/wishlist", wishlistRequest, cancellationToken: stoppingToken);
-        Console.WriteLine(!response.IsSuccessStatusCode
-            ? $"Failed to send data: {await response.Content.ReadAsStringAsync(stoppingToken)}"
-            : "Wishlist successfully sent to HR Manager.");
-        
+        _mqService.SendWishlistAsync(wishlistRequest);
+        Console.WriteLine("Wishlist submitted.");
     }
 
     private WishlistRequest CreateWishlistRequest() {
@@ -40,8 +34,7 @@ public class EmployeeService : BackgroundService {
             throw new ArgumentException("type must be teamlead or junior");
         }
         var wishlist = _wishlistGenerator.GenerateWishlist(id, partners);
+        Console.WriteLine(wishlist.EmployeeId+", " + wishlist.DesiredEmployees[0]);
         return new WishlistRequest(id, name, type, wishlist.DesiredEmployees);
     }
 }
-
-public record WishlistRequest(int EmployeeId, string EmployeeName, string Role, int[] DesiredEmployees);
